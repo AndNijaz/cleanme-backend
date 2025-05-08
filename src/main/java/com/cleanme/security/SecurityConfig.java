@@ -1,7 +1,7 @@
 
 //Klasa sluzi samo da otkrijem rutu da vidim da li je ispranvo konfigurisan CORS
 
-package com.cleanme.configuration;
+package com.cleanme.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -11,3 +11,5 @@ public class TestController {
         return "CORS radi!";
     }
 }
+
+//tu je da vidim je li radi kad uaplim angular i zovem backend
