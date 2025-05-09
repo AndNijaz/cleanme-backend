@@ -20,7 +20,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/test").permitAll()  // ✅ dozvoljeno bez autentifikacije
-                        .anyRequest().authenticated()              // ❌ ostalo zahtijeva login
+                        .anyRequest().permitAll()              // ❌ ostalo zahtijeva login
+//                        .anyRequest().authenticated()              // ❌ ostalo zahtijeva login
                 )
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())); // ✅ nova sintaksa
 
