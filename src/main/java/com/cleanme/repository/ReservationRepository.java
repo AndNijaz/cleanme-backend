@@ -13,4 +13,6 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
 
     ReservationEntity findReservationEntityByRid(UUID id);
 
+    void deleteByRid(UUID id);
+
 }

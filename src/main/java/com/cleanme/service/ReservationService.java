@@ -121,4 +121,15 @@ public class ReservationService {
                 saved.getComment(),
                 cleanerName);
     }
+
+    @Transactional
+    public void deleteReservation(UUID id, UUID myID) {
+        ReservationEntity reservation = reservationRepository.findReservationEntityByRid(id);
+
+        if (reservation == null || !reservation.getUser().getUid().equals(myID)) {
+            throw new RuntimeException("Reservation not found or not owned by user.");
+        }
+
+        this.reservationRepository.deleteByRid(id);
+    }
 }

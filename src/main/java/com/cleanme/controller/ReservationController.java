@@ -50,4 +50,10 @@ public class ReservationController {
 
         return ResponseEntity.ok(updateReservationDto);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteReservation(@PathVariable UUID id){
+        reservationService.deleteReservation(id, myID);
+        return ResponseEntity.noContent().build();
+    }
 }
