@@ -1,16 +1,16 @@
 package com.cleanme.entity;
 
+import com.cleanme.enums.UserType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.UUID;
 
+
 @Entity
 @Table(name = "users")
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UsersEntity {
@@ -29,8 +29,9 @@ public class UsersEntity {
     @Column(name = "email")
     private String email;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "user_type")
-    private String user_type;
+    private UserType user_type;
 
     @OneToMany(mappedBy = "user")
     private List<ReservationEntity> reservationAsUser;
@@ -54,7 +55,7 @@ public class UsersEntity {
         return email;
     }
 
-    public String getUser_type() {
+    public UserType getUser_type() {
         return user_type;
     }
 
@@ -82,7 +83,7 @@ public class UsersEntity {
         this.email = email;
     }
 
-    public void setUser_type(String user_type) {
+    public void setUser_type(UserType user_type) {
         this.user_type = user_type;
     }
 

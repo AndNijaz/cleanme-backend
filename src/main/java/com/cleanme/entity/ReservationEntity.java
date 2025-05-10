@@ -1,8 +1,11 @@
 package com.cleanme.entity;
 
+import com.cleanme.enums.ReservationStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.UUID;
 
 @Entity
@@ -17,39 +20,28 @@ public class ReservationEntity {
     private UUID rid;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private UsersEntity user;
 
     @ManyToOne
-    @JoinColumn(name = "cleaner")
+    @JoinColumn(name = "cleaner", nullable = false)
     private UsersEntity cleaner;
 
     @Column(name = "date")
-    private String date;
+    private LocalDate date;
 
     @Column(name = "time")
-    private String time;
+    private LocalTime time;
 
     @Column(name = "location")
     private String location;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private String status;
+    private ReservationStatus status;
 
     @Column(name = "comment")
     private String comment;
-
-    @Override
-    public String toString() {
-        return "ReservationEntity{" +
-                "rid=" + rid +
-                ", date='" + date + '\'' +
-                ", time='" + time + '\'' +
-                ", location='" + location + '\'' +
-                ", status='" + status + '\'' +
-                ", comment='" + comment + '\'' +
-                '}';
-    }
 
     public void setRid(UUID rid) {
         this.rid = rid;
@@ -63,11 +55,11 @@ public class ReservationEntity {
         this.cleaner = cleaner;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public void setTime(String time) {
+    public void setTime(LocalTime time) {
         this.time = time;
     }
 
@@ -75,7 +67,7 @@ public class ReservationEntity {
         this.location = location;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(ReservationStatus status) {
         this.status = status;
     }
 
@@ -95,11 +87,11 @@ public class ReservationEntity {
         return cleaner;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public String getTime() {
+    public LocalTime getTime() {
         return time;
     }
 
@@ -107,7 +99,7 @@ public class ReservationEntity {
         return location;
     }
 
-    public String getStatus() {
+    public ReservationStatus getStatus() {
         return status;
     }
 

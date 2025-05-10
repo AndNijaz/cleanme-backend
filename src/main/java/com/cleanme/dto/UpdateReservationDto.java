@@ -1,28 +1,28 @@
 package com.cleanme.dto;
 
+import com.cleanme.enums.ReservationStatus;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateReservationDto {
-    private UUID rid;
+    @NotNull
     private UUID cleanerId;
-    private String date;
-    private String time;
+    @NotNull
+    private LocalDate date;
+    @NotNull
+    private LocalTime time;
+    @NotNull
     private String location;
-    private String status;
+    @NotNull
+    private ReservationStatus status;
     private String comment;
-
-    public UUID getRid() {
-        return rid;
-    }
-
-    public void setRid(UUID rid) {
-        this.rid = rid;
-    }
 
     public UUID getCleanerId() {
         return cleanerId;
@@ -32,19 +32,19 @@ public class UpdateReservationDto {
         this.cleanerId = cleanerId;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public String getTime() {
+    public LocalTime getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(LocalTime time) {
         this.time = time;
     }
 
@@ -56,11 +56,11 @@ public class UpdateReservationDto {
         this.location = location;
     }
 
-    public String getStatus() {
+    public ReservationStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(ReservationStatus status) {
         this.status = status;
     }
 

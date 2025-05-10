@@ -1,17 +1,25 @@
 package com.cleanme.dto;
 
+import com.cleanme.enums.ReservationStatus;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.UUID;
 
+@AllArgsConstructor
 public class ReservationDto {
-    private final UUID rid;
-    private String date;
-    private String time;
+    private UUID rid;
+    private LocalDate date;
+    private LocalTime time;
     private String location;
-    private String status;
+    private ReservationStatus status;
     private String comment;
     private String cleanerName;
 
-    public ReservationDto(UUID rid, String date, String time, String location, String status, String comment, String cleanerName) {
+    public ReservationDto(UUID rid, LocalDate date, LocalTime time, String location, ReservationStatus status, String comment, String cleanerName) {
         this.rid = rid;
         this.date = date;
         this.time = time;
@@ -21,12 +29,11 @@ public class ReservationDto {
         this.cleanerName = cleanerName;
     }
 
-
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public String getTime() {
+    public LocalTime getTime() {
         return time;
     }
 
@@ -34,7 +41,7 @@ public class ReservationDto {
         return location;
     }
 
-    public String getStatus() {
+    public ReservationStatus getStatus() {
         return status;
     }
 
