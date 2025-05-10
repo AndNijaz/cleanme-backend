@@ -2,6 +2,7 @@ package com.cleanme.service;
 
 import com.cleanme.dto.CreateReservationDto;
 import com.cleanme.dto.ReservationDto;
+import com.cleanme.dto.UpdateReservationDto;
 import com.cleanme.entity.ReservationEntity;
 import com.cleanme.entity.UsersEntity;
 import com.cleanme.repository.ReservationRepository;
@@ -90,5 +91,34 @@ public class ReservationService {
                 saved.getComment(),
                 cleanerName
         );
+    }
+
+    public ReservationDto updateReservationDto(UUID id, UUID myID, UpdateReservationDto dto) {
+        ReservationEntity reservation = reservationRepository.findReservationEntityByRid(id);
+        UsersEntity cleaner = usersRepository.findUsersEntityByUid(dto.getCleanerId());
+
+        if (reservation == null || !reservation.getUser().getUid().equals(myID)) {
+            throw new RuntimeException("Reservation not found or not owned by user"); //
+        }
+
+        reservation.setCleaner(cleaner);
+        reservation.setDate(dto.getDate());
+        reservation.setTime(dto.getTime());
+        reservation.setLocation(dto.getLocation());
+        reservation.setStatus(dto.getStatus());
+        reservation.setComment(dto.getComment());
+
+        ReservationEntity saved = reservationRepository.save(reservation);
+
+        String cleanerName = cleaner != null ? cleaner.getFirstName() + " " + cleaner.getLastName() : null;
+
+        return  new ReservationDto(
+                saved.getRid(),
+                saved.getDate(),
+                saved.getTime(),
+                saved.getLocation(),
+                saved.getStatus(),
+                saved.getComment(),
+                cleanerName);
     }
 }

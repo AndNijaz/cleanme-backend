@@ -2,8 +2,10 @@ package com.cleanme.controller;
 
 import com.cleanme.dto.CreateReservationDto;
 import com.cleanme.dto.ReservationDto;
+import com.cleanme.dto.UpdateReservationDto;
 import com.cleanme.entity.ReservationEntity;
 import com.cleanme.service.ReservationService;
+import org.hibernate.sql.Update;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,5 +41,13 @@ public class ReservationController {
         ReservationDto reservation = reservationService.createReservation(myID, dto);
 
         return ResponseEntity.status(201).body(reservation);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ReservationDto> updateReservation(@PathVariable UUID id, @RequestBody UpdateReservationDto dto){
+
+        ReservationDto updateReservationDto = reservationService.updateReservationDto(id, myID, dto);
+
+        return ResponseEntity.ok(updateReservationDto);
     }
 }
