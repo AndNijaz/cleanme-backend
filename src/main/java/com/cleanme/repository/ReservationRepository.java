@@ -11,5 +11,6 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
 
     List<ReservationEntity> findByUser_Uid(UUID id);
 
+    ReservationEntity findReservationEntityByRid(UUID id);
 
 }

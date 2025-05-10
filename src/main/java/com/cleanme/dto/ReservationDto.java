@@ -1,6 +1,9 @@
 package com.cleanme.dto;
 
+import java.util.UUID;
+
 public class ReservationDto {
+    private final UUID rid;
     private String date;
     private String time;
     private String location;
@@ -8,7 +11,8 @@ public class ReservationDto {
     private String comment;
     private String cleanerName;
 
-    public ReservationDto(String date, String time, String location, String status, String comment, String cleanerName) {
+    public ReservationDto(UUID rid, String date, String time, String location, String status, String comment, String cleanerName) {
+        this.rid = rid;
         this.date = date;
         this.time = time;
         this.location = location;
@@ -40,5 +44,9 @@ public class ReservationDto {
 
     public String getCleanerName() {
         return cleanerName;
+    }
+
+    public UUID getRid() {
+        return rid;
     }
 }

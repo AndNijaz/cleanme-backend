@@ -1,10 +1,11 @@
 package com.cleanme.controller;
 
+import com.cleanme.dto.CreateReservationDto;
 import com.cleanme.dto.ReservationDto;
+import com.cleanme.entity.ReservationEntity;
 import com.cleanme.service.ReservationService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -27,4 +28,16 @@ public class ReservationController {
        return reservationService.getReservations(myID);
     }
 
+    @GetMapping("/{id}")
+    public ReservationDto getReservation(@PathVariable UUID id){
+        return this.reservationService.getReservation(id);
+    }
+
+    @PostMapping()
+    public ResponseEntity<ReservationDto> createReservation(@RequestBody CreateReservationDto dto){
+
+        ReservationDto reservation = reservationService.createReservation(myID, dto);
+
+        return ResponseEntity.status(201).body(reservation);
+    }
 }
