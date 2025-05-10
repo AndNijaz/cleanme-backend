@@ -7,8 +7,6 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "reservations")
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReservationEntity {
@@ -41,4 +39,81 @@ public class ReservationEntity {
     @Column(name = "comment")
     private String comment;
 
+    @Override
+    public String toString() {
+        return "ReservationEntity{" +
+                "rid=" + rid +
+                ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
+                ", location='" + location + '\'' +
+                ", status='" + status + '\'' +
+                ", comment='" + comment + '\'' +
+                '}';
+    }
+
+    public void setRid(UUID rid) {
+        this.rid = rid;
+    }
+
+    public void setUser(UsersEntity user) {
+        this.user = user;
+    }
+
+    public void setCleaner(UsersEntity cleaner) {
+        this.cleaner = cleaner;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public UUID getRid() {
+        return rid;
+    }
+
+    public UsersEntity getUser() {
+        return user;
+    }
+
+    public UsersEntity getCleaner() {
+        return cleaner;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getComment() {
+        return comment;
+    }
 }
+
+

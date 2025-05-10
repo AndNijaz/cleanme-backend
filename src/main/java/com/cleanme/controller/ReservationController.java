@@ -14,16 +14,13 @@ import java.util.UUID;
 @RestController()
 public class ReservationController {
 
+    private UUID myID = UUID.fromString("11111111-1111-1111-1111-111111111111");
 
-    private UUID myID = UUID.fromString("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11");
-
-    ReservationService reservationService;
+    private final ReservationService reservationService;
 
     public ReservationController(ReservationService reservationService){
         this.reservationService = reservationService;
     }
-
-
 
     @GetMapping("/my")
     public List<ReservationDto> getReservations(){
