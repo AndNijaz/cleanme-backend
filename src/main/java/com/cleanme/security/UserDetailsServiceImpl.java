@@ -1,15 +1,26 @@
 package com.cleanme.security;
 
-public class CustomUserDetailsService {
-}
+import com.cleanme.entity.UsersEntity;
+import com.cleanme.repository.UsersRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.*;
+import org.springframework.stereotype.Service;
 
-//✅ Spring Security koristi interfejs UserDetailsService da pronađe korisnika na osnovu e-maila ili username-a.
-//✅ Tvoja klasa CustomUserDetailsService implementira taj interfejs i govori Springu kako pronaći korisnika u bazi (npr. preko UserRepository).
-//✅ Nakon što pronađe korisnika, metoda loadUserByUsername() vraća Springov UserDetails objekat, koji sadrži:
-//email kao username
-//hashiranu lozinku
-//listu prava pristupa (authorities, npr. ROLE_CLIENT)
-//✅ Taj UserDetails Spring koristi da:
-//validira login (username + password)
-//provjeri pristup tokena na svakom requestu (npr. hasRole('CLEANER'))
-//✅ Bez ove klase, Spring ne zna kako izgleda tvoja User klasa niti gdje se nalazi.
+@Service
+@RequiredArgsConstructor
+public class UserDetailsServiceImpl implements UserDetailsService {
+
+    private final UsersRepository usersRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        UsersEntity user = usersRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        return org.springframework.security.core.userdetails.User
+                .withUsername(user.getEmail())
+                .password(user.getPassword())
+                .roles(user.getUserType().name())
+                .build();
+    }
+}

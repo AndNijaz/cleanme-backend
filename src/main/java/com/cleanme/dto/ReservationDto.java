@@ -19,16 +19,6 @@ public class ReservationDto {
     private String comment;
     private String cleanerName;
 
-    public ReservationDto(UUID rid, LocalDate date, LocalTime time, String location, ReservationStatus status, String comment, String cleanerName) {
-        this.rid = rid;
-        this.date = date;
-        this.time = time;
-        this.location = location;
-        this.status = status;
-        this.comment = comment;
-        this.cleanerName = cleanerName;
-    }
-
     public LocalDate getDate() {
         return date;
     }
