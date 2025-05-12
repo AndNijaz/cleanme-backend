@@ -7,13 +7,11 @@ import com.cleanme.entity.UsersEntity;
 import com.cleanme.repository.ReservationRepository;
 import com.cleanme.repository.ReviewRepository;
 import com.cleanme.repository.UsersRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class ReviewService {
@@ -59,7 +57,7 @@ public class ReviewService {
 
         return reviews.stream()
                 .map(this::mapToDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private ReviewDto mapToDto(ReviewEntity entity) {
