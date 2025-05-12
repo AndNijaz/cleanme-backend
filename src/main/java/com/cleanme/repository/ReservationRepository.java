@@ -9,11 +9,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ReservationRepository extends JpaRepository<ReservationEntity, UUID> {
-
     List<ReservationEntity> findByUser_Uid(UUID id);
-
     Optional<ReservationEntity> findReservationEntityByRid(UUID id);
-
     void deleteByRid(UUID id);
-
+    List<ReservationEntity> findByCleaner_Uid(UUID id);
 }
