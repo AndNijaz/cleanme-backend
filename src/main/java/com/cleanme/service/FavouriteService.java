@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -53,7 +52,7 @@ public class FavouriteService {
                         fav.getCleaner().getUid(),
                         fav.getCleaner().getFirstName() + " " + fav.getCleaner().getLastName()
                 ))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public void removeFavourite(UUID clientId, UUID cleanerId) {
