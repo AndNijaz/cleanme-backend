@@ -5,6 +5,7 @@ import com.cleanme.dto.ReservationDto;
 import com.cleanme.dto.UpdateReservationDto;
 import com.cleanme.service.ReservationService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,23 +13,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-
-@RequestMapping("/reservation")
 @RestController
+@RequestMapping("/reservation")
+@RequiredArgsConstructor
 public class ReservationController {
 
     // TODO: replace with authenticated user ID when security is implemented
-    private UUID myID = UUID.fromString("11111111-1111-1111-1111-111111111111");
+    private final UUID myID = UUID.fromString("11111111-1111-1111-1111-111111111111");
 
     private final ReservationService reservationService;
 
-    public ReservationController(ReservationService reservationService){
-        this.reservationService = reservationService;
-    }
-
     @GetMapping("/all")
     public List<ReservationDto> getReservations(){
-       return reservationService.getReservations(myID);
+        return reservationService.getReservations(myID);
     }
 
     @GetMapping("/{id}")
@@ -38,17 +35,13 @@ public class ReservationController {
 
     @PostMapping()
     public ResponseEntity<ReservationDto> createReservation(@Valid @RequestBody CreateReservationDto dto){
-
         ReservationDto reservation = reservationService.createReservation(myID, dto);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(reservation);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ReservationDto> updateReservation(@PathVariable UUID id, @Valid @RequestBody UpdateReservationDto dto){
-
         ReservationDto updateReservationDto = reservationService.updateReservationDto(id, myID, dto);
-
         return ResponseEntity.ok(updateReservationDto);
     }
 
