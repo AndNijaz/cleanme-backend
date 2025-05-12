@@ -12,10 +12,12 @@ import java.util.UUID;
 @Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class UsersEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @EqualsAndHashCode.Include
     @Column(name = "UID")
     private UUID uid;
 
@@ -35,9 +37,35 @@ public class UsersEntity {
     @Column(name = "user_type")
     private UserType userType;
 
-    @OneToMany(mappedBy = "user")
+    // === RELATIONS ===
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<ReservationEntity> reservationAsUser;
 
-    @OneToMany(mappedBy = "cleaner")
+    @OneToMany(mappedBy = "cleaner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<ReservationEntity> reservationAsCleaner;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<NotificationEntity> notifications;
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<FavouriteEntity> favouritesAsClient;
+
+    @OneToMany(mappedBy = "cleaner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<FavouriteEntity> favouritesAsCleaner;
+
+    @OneToOne(mappedBy = "cleaner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private CleanerDetailsEntity cleanerDetails;
 }
