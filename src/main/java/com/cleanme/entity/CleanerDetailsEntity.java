@@ -1,8 +1,13 @@
 package com.cleanme.entity;
 
+import com.cleanme.dto.auth.CleanerSetupRequest;
+import com.cleanme.utilities.AvailabilityConverter;
+import com.cleanme.utilities.BioConverter;
 import jakarta.persistence.*;
 import lombok.*;
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Entity
@@ -27,8 +32,10 @@ public class CleanerDetailsEntity {
     private BigDecimal hourlyRate;
 
     @Column(name = "availability")
-    private String availability;
+    @Convert(converter = AvailabilityConverter.class)
+    private List<Map<String, CleanerSetupRequest.TimeRange>> availability;
 
     @Column(name = "bio")
-    private String bio;
+    @Convert(converter = BioConverter.class)
+    private List<String> bio;
 }

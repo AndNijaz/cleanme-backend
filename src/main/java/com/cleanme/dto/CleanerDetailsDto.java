@@ -1,9 +1,12 @@
 package com.cleanme.dto;
 
+import com.cleanme.dto.auth.CleanerSetupRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Data
@@ -14,6 +17,6 @@ public class CleanerDetailsDto {
     private String lastName;
     private String email;
     private BigDecimal hourlyRate;
-    private String availability;
-    private String bio;
+    private List<Map<String, CleanerSetupRequest.TimeRange>> availability;
+    private List<String> bio;
 }

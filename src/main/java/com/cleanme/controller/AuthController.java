@@ -1,9 +1,9 @@
 package com.cleanme.controller;
 
-import com.cleanme.dto.AuthResponse;
-import com.cleanme.dto.CleanerSetupRequest;
-import com.cleanme.dto.LoginRequest;
-import com.cleanme.dto.RegisterRequest;
+import com.cleanme.dto.auth.AuthResponse;
+import com.cleanme.dto.auth.CleanerSetupRequest;
+import com.cleanme.dto.auth.LoginRequest;
+import com.cleanme.dto.auth.RegisterRequest;
 import com.cleanme.service.AuthService;
 import com.cleanme.service.CleanerService;
 import jakarta.validation.Valid;
@@ -35,5 +35,6 @@ public class AuthController {
         cleanerService.setupCleaner(request);
         return ResponseEntity.ok().build();
     }
+
 
 }

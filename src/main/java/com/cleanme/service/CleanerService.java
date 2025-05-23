@@ -1,6 +1,8 @@
 package com.cleanme.service;
 
 import com.cleanme.dto.*;
+import com.cleanme.dto.CleanerDetailsDto;
+import com.cleanme.dto.auth.CleanerSetupRequest;
 import com.cleanme.entity.CleanerDetailsEntity;
 import com.cleanme.entity.UsersEntity;
 import com.cleanme.enums.UserType;
@@ -106,7 +108,11 @@ public class CleanerService {
                             (details.getHourlyRate().compareTo(filter.getMinRate()) >= 0 &&
                                     details.getHourlyRate().compareTo(filter.getMaxRate()) <= 0);
                     boolean availabilityMatch = filter.getAvailability() == null ||
-                            details.getAvailability().toLowerCase().contains(filter.getAvailability().toLowerCase());
+                            details.getAvailability().stream().anyMatch(map ->
+                                    map.keySet().stream().anyMatch(day ->
+                                            day.equalsIgnoreCase(filter.getAvailability())
+                                    )
+                            );
                     return priceMatch && availabilityMatch;
                 })
                 .map(user -> {

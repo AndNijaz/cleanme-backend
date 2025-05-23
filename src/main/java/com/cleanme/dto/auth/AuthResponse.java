@@ -1,4 +1,4 @@
-package com.cleanme.dto;
+package com.cleanme.dto.auth;
 
 import com.cleanme.enums.UserType;
 import lombok.AllArgsConstructor;

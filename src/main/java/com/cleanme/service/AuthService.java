@@ -1,10 +1,9 @@
 package com.cleanme.service;
 
-import com.cleanme.dto.AuthResponse;
-import com.cleanme.dto.LoginRequest;
-import com.cleanme.dto.RegisterRequest;
+import com.cleanme.dto.auth.AuthResponse;
+import com.cleanme.dto.auth.LoginRequest;
+import com.cleanme.dto.auth.RegisterRequest;
 import com.cleanme.entity.UsersEntity;
-import com.cleanme.enums.UserType;
 import com.cleanme.repository.UsersRepository;
 import com.cleanme.security.JwtUtil;
 import jakarta.transaction.Transactional;
