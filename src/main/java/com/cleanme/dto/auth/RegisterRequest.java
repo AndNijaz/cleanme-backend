@@ -1,4 +1,4 @@
-package com.cleanme.dto;
+package com.cleanme.dto.auth;
 
 import com.cleanme.enums.UserType;
 import jakarta.validation.constraints.Email;
@@ -20,6 +20,12 @@ public class RegisterRequest {
 
     @NotBlank
     private String password;
+
+    @NotBlank
+    private String address;
+
+    @NotBlank
+    private String phoneNumber;
 
     private UserType userType;
 }

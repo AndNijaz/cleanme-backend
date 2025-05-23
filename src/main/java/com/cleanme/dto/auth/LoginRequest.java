@@ -1,4 +1,4 @@
-package com.cleanme.dto;
+package com.cleanme.dto.auth;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
