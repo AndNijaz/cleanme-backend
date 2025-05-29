@@ -4,10 +4,12 @@ import com.cleanme.dto.CreateReservationDto;
 import com.cleanme.dto.ReservationDto;
 import com.cleanme.dto.UpdateReservationDto;
 import com.cleanme.service.ReservationService;
+import com.cleanme.utilities.SecurityUtils;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,11 +27,12 @@ public class ReservationController {
     private final UUID myID = UUID.fromString("11111111-1111-1111-1111-111111111111");
 
     private final ReservationService reservationService;
+    private final SecurityUtils securityUtils;
 
     @GetMapping("/all")
-    public List<ReservationDto> getReservations(){
-//        UUID userId = UUID.fromString(auth.getName());
-        return reservationService.getReservations(UUID.fromString("51f9c957-1570-4979-a011-ba699a2897bb"));
+    public List<ReservationDto> getReservations(Authentication auth){
+        UUID userId = securityUtils.extractUserId(auth);
+        return reservationService.getReservations(userId);
     }
 
     @GetMapping("/{id}")
