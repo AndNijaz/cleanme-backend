@@ -4,14 +4,19 @@ import com.cleanme.dto.CreateReservationDto;
 import com.cleanme.dto.ReservationDto;
 import com.cleanme.dto.UpdateReservationDto;
 import com.cleanme.service.ReservationService;
+import com.cleanme.utilities.SecurityUtils;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
+
+
+@CrossOrigin(origins = "http://localhost:4200")
 
 @RestController
 @RequestMapping("/reservation")
@@ -22,10 +27,12 @@ public class ReservationController {
     private final UUID myID = UUID.fromString("11111111-1111-1111-1111-111111111111");
 
     private final ReservationService reservationService;
+    private final SecurityUtils securityUtils;
 
     @GetMapping("/all")
-    public List<ReservationDto> getReservations(){
-        return reservationService.getReservations(myID);
+    public List<ReservationDto> getReservations(Authentication auth){
+        UUID userId = securityUtils.extractUserId(auth);
+        return reservationService.getReservations(userId);
     }
 
     @GetMapping("/{id}")

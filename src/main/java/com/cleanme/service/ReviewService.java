@@ -1,5 +1,6 @@
 package com.cleanme.service;
 
+import com.cleanme.dto.BookingWithReviewDto;
 import com.cleanme.dto.ReviewDto;
 import com.cleanme.entity.ReservationEntity;
 import com.cleanme.entity.ReviewEntity;
@@ -11,7 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewService {
@@ -47,6 +50,7 @@ public class ReviewService {
         ReviewEntity saved = reviewRepository.save(review);
         return mapToDto(saved);
 
+
     }
 
     public List<ReviewDto> getAllReviewsForCleaner(UUID cleanerId) {
@@ -69,6 +73,57 @@ public class ReviewService {
         dto.setRating(entity.getRating());
         dto.setComment(entity.getComment());
         dto.setDate(entity.getDate());
+        String cleanerFullName = entity.getCleaner().getFirstName() + " " + entity.getCleaner().getLastName();
+        dto.setCleanerName(cleanerFullName);
         return dto;
     }
+
+    public List<ReviewDto> getAllReviewsByUser(UUID userId) {
+        UsersEntity user = usersRepository.findUsersEntityByUid(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        List<ReviewEntity> reviews = reviewRepository.findByUser(user);
+
+        return reviews.stream()
+                .map(this::mapToDto)
+                .toList();
+    }
+
+    public List<BookingWithReviewDto> getBookingsWithReviewsForUser(UUID userId) {
+        UsersEntity user = usersRepository.findUsersEntityByUid(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        List<ReservationEntity> reservations = reservationRepository.findByUser_Uid(userId);
+        List<ReviewEntity> reviews = reviewRepository.findByUser(user);
+
+        // Map reviews by reservation ID for quick lookup
+        Map<UUID, ReviewEntity> reviewMap = reviews.stream()
+                .collect(Collectors.toMap(
+                        r -> r.getReservation().getRid(),
+                        r -> r
+                ));
+
+        return reservations.stream()
+                .map(reservation -> {
+                    BookingWithReviewDto dto = new BookingWithReviewDto();
+                    dto.setBookingId(reservation.getRid());
+                    dto.setDate(reservation.getDate());
+                    dto.setTime(reservation.getTime());
+                    dto.setLocation(reservation.getLocation());
+                    dto.setComment(reservation.getComment());
+
+                    UsersEntity cleaner = reservation.getCleaner();
+                    dto.setCleanerId(cleaner.getUid());
+                    dto.setCleanerName(cleaner.getFirstName() + " " + cleaner.getLastName());
+
+                    // Add review if it exists
+                    if (reviewMap.containsKey(reservation.getRid())) {
+                        dto.setReview(mapToDto(reviewMap.get(reservation.getRid())));
+                    }
+
+                    return dto;
+                })
+                .toList();
+    }
+
 }

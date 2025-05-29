@@ -9,4 +9,6 @@ import java.util.UUID;
 
 public interface ReviewRepository extends JpaRepository<ReviewEntity, UUID> {
     List<ReviewEntity> findByCleaner(UsersEntity cleaner);
+    List<ReviewEntity> findByUser(UsersEntity user);
+
 }
