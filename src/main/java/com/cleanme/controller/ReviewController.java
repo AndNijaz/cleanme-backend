@@ -28,4 +28,10 @@ public class ReviewController {
         List<ReviewDto> reviews = reviewService.getAllReviewsForCleaner(cleanerId);
         return ResponseEntity.ok(reviews);
     }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<ReviewDto>> getUserReviews(@PathVariable UUID userId) {
+        List<ReviewDto> reviews = reviewService.getAllReviewsByUser(userId);
+        return ResponseEntity.ok(reviews);
+    }
 }

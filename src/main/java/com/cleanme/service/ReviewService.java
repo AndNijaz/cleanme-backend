@@ -47,6 +47,7 @@ public class ReviewService {
         ReviewEntity saved = reviewRepository.save(review);
         return mapToDto(saved);
 
+
     }
 
     public List<ReviewDto> getAllReviewsForCleaner(UUID cleanerId) {
@@ -69,6 +70,19 @@ public class ReviewService {
         dto.setRating(entity.getRating());
         dto.setComment(entity.getComment());
         dto.setDate(entity.getDate());
+        String cleanerFullName = entity.getCleaner().getFirstName() + " " + entity.getCleaner().getLastName();
+        dto.setCleanerName(cleanerFullName);
         return dto;
+    }
+
+    public List<ReviewDto> getAllReviewsByUser(UUID userId) {
+        UsersEntity user = usersRepository.findUsersEntityByUid(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        List<ReviewEntity> reviews = reviewRepository.findByUser(user);
+
+        return reviews.stream()
+                .map(this::mapToDto)
+                .toList();
     }
 }

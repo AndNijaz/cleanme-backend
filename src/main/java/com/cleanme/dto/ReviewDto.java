@@ -18,4 +18,5 @@ public class ReviewDto {
     private int rating;
     private String comment;
     private LocalDate date;
+    private String cleanerName;
 }

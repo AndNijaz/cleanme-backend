@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+
+@CrossOrigin(origins = "http://localhost:4200")
+
 @RestController
 @RequestMapping("/reservation")
 @RequiredArgsConstructor
@@ -25,7 +28,8 @@ public class ReservationController {
 
     @GetMapping("/all")
     public List<ReservationDto> getReservations(){
-        return reservationService.getReservations(myID);
+//        UUID userId = UUID.fromString(auth.getName());
+        return reservationService.getReservations(UUID.fromString("51f9c957-1570-4979-a011-ba699a2897bb"));
     }
 
     @GetMapping("/{id}")
