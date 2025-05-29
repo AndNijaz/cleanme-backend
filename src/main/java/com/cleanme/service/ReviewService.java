@@ -1,6 +1,7 @@
 package com.cleanme.service;
 
 import com.cleanme.dto.BookingWithReviewDto;
+import com.cleanme.dto.EditReviewDto;
 import com.cleanme.dto.ReviewDto;
 import com.cleanme.entity.ReservationEntity;
 import com.cleanme.entity.ReviewEntity;
@@ -125,5 +126,19 @@ public class ReviewService {
                 })
                 .toList();
     }
+
+    public void updateReview(UUID reviewId, EditReviewDto reviewDto) {
+        ReviewEntity existingReview = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new RuntimeException("Review not found"));
+
+        existingReview.setRating(reviewDto.getRating());
+        existingReview.setComment(reviewDto.getComment());
+        existingReview.setDate(LocalDate.now());
+        // Add any other fields you allow to be updated
+
+        reviewRepository.save(existingReview);
+    }
+
+
 
 }
