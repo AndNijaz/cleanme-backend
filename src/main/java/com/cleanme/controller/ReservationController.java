@@ -43,9 +43,6 @@ public class ReservationController {
     @PostMapping()
     public ResponseEntity<ReservationDto> createReservation(@Valid @RequestBody CreateReservationDto dto, Authentication auth){
         UUID userId = securityUtils.extractUserId(auth);
-        System.out.println("--------------------------------------------------------------------");
-        System.out.println(dto);
-        System.out.println("--------------------------------------------------------------------");
         ReservationDto reservation = reservationService.createReservation(userId, dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(reservation);
     }
