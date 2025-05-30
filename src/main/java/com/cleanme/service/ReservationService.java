@@ -69,6 +69,9 @@ public class ReservationService {
 
     @Transactional
     public ReservationDto createReservation(UUID myId, CreateReservationDto dto) {
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println(dto);
+        System.out.println("--------------------------------------------------------------------");
         UsersEntity user = usersRepository.findUsersEntityByUid(myId).orElseThrow(() -> new RuntimeException("User not found"));
         UsersEntity cleaner = usersRepository.findUsersEntityByUid(dto.getCleanerID()).orElseThrow(() -> new RuntimeException("Cleaner not found"));
 
