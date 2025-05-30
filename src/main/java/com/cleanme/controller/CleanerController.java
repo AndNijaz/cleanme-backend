@@ -27,7 +27,13 @@ public class CleanerController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CleanerDetailsDto> getCleanerById(@PathVariable UUID id) {
-        return ResponseEntity.ok(cleanerService.getCleanerById(id));
+        System.out.println("piveeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+        System.out.println(id);
+        System.out.println("piveeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+        CleanerDetailsDto cleaner = cleanerService.getCleanerById(id);
+        System.out.println("Cleaner fetched: " + cleaner);
+        return ResponseEntity.ok(cleaner);
+
     }
 
     @PutMapping("/{id}")

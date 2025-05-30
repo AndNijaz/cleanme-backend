@@ -25,6 +25,10 @@ public class ReviewController {
     @PostMapping("/{reservationId}")
     public ResponseEntity<ReviewDto> reviewReservation(@PathVariable UUID reservationId,
                                                        @RequestBody ReviewDto reviewDto) {
+        System.out.println("KAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADIIIIIIIIIIIIR");
+        System.out.println(reviewDto);
+        System.out.println("KAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADIIIIIIIIIIIIR");
+
         ReviewDto savedReview = this.reviewService.reviewReservation(reservationId, reviewDto);
         return ResponseEntity.ok(savedReview);
     }
