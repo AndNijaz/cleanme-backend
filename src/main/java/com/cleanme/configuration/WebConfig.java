@@ -1,3 +1,4 @@
+
 package com.cleanme.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -7,8 +8,10 @@ import org.springframework.web.servlet.config.annotation.*;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
+//    @Value("${frontend.url}")
+//    private String frontendUrl; // <--- dodano polje
     @Value("${frontend.url}")
-    private String frontendUrl; // <--- dodano polje
+    private String frontendUrl;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -21,3 +24,7 @@ public class WebConfig implements WebMvcConfigurer {
 }
 
 //Setup komunikacije fronta i beka - NE BRISATI, eventualno promijeniti
+
+
+
+
