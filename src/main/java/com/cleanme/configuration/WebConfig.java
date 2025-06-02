@@ -1,6 +1,7 @@
 
 package com.cleanme.configuration;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;
@@ -18,6 +19,11 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedMethods("*")
                 .allowedHeaders("*")
                 .allowCredentials(true);
+    }
+
+    @PostConstruct
+    public void printFrontendUrl() {
+        System.out.println("🌍 CORS ALLOWED ORIGIN: " + frontendUrl);
     }
 }
 
