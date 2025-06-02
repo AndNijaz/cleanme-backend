@@ -8,9 +8,7 @@ import org.springframework.web.servlet.config.annotation.*;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-//    @Value("${frontend.url}")
-//    private String frontendUrl; // <--- dodano polje
-    @Value("${frontend.url}")
+    @Value("${frontend.url}") // CORS whitelist – koristi URL iz application.properties
     private String frontendUrl;
 
     @Override
