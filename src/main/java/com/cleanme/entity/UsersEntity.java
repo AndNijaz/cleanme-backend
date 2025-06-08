@@ -33,6 +33,12 @@ public class UsersEntity {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "address")
+    private String address;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "user_type")
     private UserType userType;
