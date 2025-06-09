@@ -39,6 +39,18 @@ public class UsersEntity {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "country")
+    private String country;
+
+    @Column(name = "city")
+    private String city;
+
+    @Column(name = "street")
+    private String street;
+
+    @Column(name = "street_extra")
+    private String streetExtra;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "user_type")
     private UserType userType;

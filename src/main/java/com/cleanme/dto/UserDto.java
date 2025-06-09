@@ -11,5 +11,9 @@ public class UserDto {
     private String email;
     private String phone;
     private String address;
+    private String country;
+    private String city;
+    private String street;
+    private String streetExtra;
     // Add other fields as needed
 } 
