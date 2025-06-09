@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -57,5 +58,17 @@ public class ReservationController {
     public ResponseEntity<Void> deleteReservation(@PathVariable UUID id){
         reservationService.deleteReservation(id, myID);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/booked-times/{cleanerId}")
+    public ResponseEntity<List<String>> getBookedTimeSlots(@PathVariable UUID cleanerId, @RequestParam String date) {
+        try {
+            LocalDate localDate = LocalDate.parse(date);
+            List<String> bookedTimes = reservationService.getBookedTimeSlots(cleanerId, localDate);
+            return ResponseEntity.ok(bookedTimes);
+        } catch (Exception e) {
+            System.err.println("Error parsing date or fetching booked times: " + e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

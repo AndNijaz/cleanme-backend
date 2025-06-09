@@ -9,6 +9,7 @@ import com.cleanme.repository.FavouriteRepository;
 import com.cleanme.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -55,7 +56,18 @@ public class FavouriteService {
                 .toList();
     }
 
+    @Transactional
     public void removeFavourite(UUID clientId, UUID cleanerId) {
+        System.out.println("Removing favorite: clientId=" + clientId + ", cleanerId=" + cleanerId);
+        
+        // Check if favorite exists first
+        boolean exists = favouriteRepository.existsByClient_UidAndCleaner_Uid(clientId, cleanerId);
+        if (!exists) {
+            System.out.println("Favorite not found - may already be removed");
+            return;
+        }
+        
         favouriteRepository.deleteByClient_UidAndCleaner_Uid(clientId, cleanerId);
+        System.out.println("Favorite removed successfully");
     }
 }

@@ -1,0 +1,6 @@
+-- Add separate address fields to users table
+ALTER TABLE users 
+ADD COLUMN IF NOT EXISTS country VARCHAR(255),
+ADD COLUMN IF NOT EXISTS city VARCHAR(255),
+ADD COLUMN IF NOT EXISTS street VARCHAR(255),
+ADD COLUMN IF NOT EXISTS street_extra VARCHAR(255); 

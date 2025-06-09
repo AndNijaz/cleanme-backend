@@ -28,6 +28,10 @@ public class UserService {
         user.setEmail(userDto.getEmail());
         user.setPhone(userDto.getPhone());
         user.setAddress(userDto.getAddress());
+        user.setCountry(userDto.getCountry());
+        user.setCity(userDto.getCity());
+        user.setStreet(userDto.getStreet());
+        user.setStreetExtra(userDto.getStreetExtra());
 
         UsersEntity updatedUser = usersRepository.save(user);
         return mapToDto(updatedUser);
@@ -41,6 +45,10 @@ public class UserService {
         dto.setEmail(user.getEmail());
         dto.setPhone(user.getPhone());
         dto.setAddress(user.getAddress());
+        dto.setCountry(user.getCountry());
+        dto.setCity(user.getCity());
+        dto.setStreet(user.getStreet());
+        dto.setStreetExtra(user.getStreetExtra());
         // ... map other fields as needed
         return dto;
     }

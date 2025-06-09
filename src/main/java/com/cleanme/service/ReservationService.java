@@ -12,8 +12,10 @@ import jakarta.transaction.Transactional;
 import org.hibernate.annotations.NotFound;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -65,6 +67,25 @@ public class ReservationService {
                 reservation.getComment(),
                 cleanerName
         );
+    }
+
+    public List<String> getBookedTimeSlots(UUID cleanerId, LocalDate date) {
+        System.out.println("Fetching booked time slots for cleaner: " + cleanerId + " on date: " + date);
+        
+        // Find all reservations for this cleaner on this specific date
+        List<ReservationEntity> reservations = reservationRepository.findByCleaner_Uid(cleanerId)
+                .stream()
+                .filter(reservation -> reservation.getDate().equals(date))
+                .filter(reservation -> reservation.getStatus() != ReservationStatus.CANCELLED)
+                .collect(Collectors.toList());
+        
+        // Extract time slots and convert to string format
+        List<String> bookedTimes = reservations.stream()
+                .map(reservation -> reservation.getTime().toString())
+                .collect(Collectors.toList());
+        
+        System.out.println("Found " + bookedTimes.size() + " booked time slots: " + bookedTimes);
+        return bookedTimes;
     }
 
     @Transactional
