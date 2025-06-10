@@ -91,7 +91,6 @@ public class CleanerService {
     }
 
     public void updateCleanerDetails(UUID id, CleanerUpdateRequest request) {
-        // Find the user first to validate they exist and are a cleaner
         UsersEntity cleaner = usersRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -99,16 +98,13 @@ public class CleanerService {
             throw new RuntimeException("User is not a cleaner");
         }
 
-        // Find existing cleaner details or create new ones
         CleanerDetailsEntity details = cleanerRepository.findByCleaner_Uid(id)
                 .orElse(new CleanerDetailsEntity());
 
-        // If this is a new cleaner details entity, set the cleaner reference
         if (details.getCleaner() == null) {
             details.setCleaner(cleaner);
         }
 
-        // Update fields conditionally
         if (request.getServicesOffered() != null) {
             details.setServicesOffered(request.getServicesOffered());
         }
