@@ -31,7 +31,6 @@ public class CleanerController {
             CleanerDetailsDto cleaner = cleanerService.getCleanerById(id);
             return ResponseEntity.ok(cleaner);
         } catch (RuntimeException e) {
-            // Return 404 if cleaner details not found
             return ResponseEntity.notFound().build();
         }
     }
@@ -42,7 +41,6 @@ public class CleanerController {
             cleanerService.updateCleanerDetails(id, request);
             return ResponseEntity.ok().build();
         } catch (RuntimeException e) {
-            // Return 404 if cleaner details not found
             return ResponseEntity.notFound().build();
         }
     }
