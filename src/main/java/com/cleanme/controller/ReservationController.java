@@ -24,9 +24,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ReservationController {
 
-    // TODO: replace with authenticated user ID when security is implemented
-    private final UUID myID = UUID.fromString("11111111-1111-1111-1111-111111111111");
-
     private final ReservationService reservationService;
     private final SecurityUtils securityUtils;
 
@@ -49,14 +46,16 @@ public class ReservationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ReservationDto> updateReservation(@PathVariable UUID id, @Valid @RequestBody UpdateReservationDto dto){
-        ReservationDto updateReservationDto = reservationService.updateReservationDto(id, myID, dto);
+    public ResponseEntity<ReservationDto> updateReservation(@PathVariable UUID id, @Valid @RequestBody UpdateReservationDto dto, Authentication auth){
+        UUID userId = securityUtils.extractUserId(auth);
+        ReservationDto updateReservationDto = reservationService.updateReservationDto(id, userId, dto);
         return ResponseEntity.ok(updateReservationDto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteReservation(@PathVariable UUID id){
-        reservationService.deleteReservation(id, myID);
+    public ResponseEntity<Void> deleteReservation(@PathVariable UUID id, Authentication auth){
+        UUID userId = securityUtils.extractUserId(auth);
+        reservationService.deleteReservation(id, userId);
         return ResponseEntity.noContent().build();
     }
 

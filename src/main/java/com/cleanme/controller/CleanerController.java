@@ -27,19 +27,24 @@ public class CleanerController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CleanerDetailsDto> getCleanerById(@PathVariable UUID id) {
-        System.out.println("piveeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-        System.out.println(id);
-        System.out.println("piveeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-        CleanerDetailsDto cleaner = cleanerService.getCleanerById(id);
-        System.out.println("Cleaner fetched: " + cleaner);
-        return ResponseEntity.ok(cleaner);
-
+        try {
+            CleanerDetailsDto cleaner = cleanerService.getCleanerById(id);
+            return ResponseEntity.ok(cleaner);
+        } catch (RuntimeException e) {
+            // Return 404 if cleaner details not found
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateCleaner(@PathVariable UUID id, @RequestBody CleanerUpdateRequest request) {
-        cleanerService.updateCleanerDetails(id, request);
-        return ResponseEntity.ok().build();
+        try {
+            cleanerService.updateCleanerDetails(id, request);
+            return ResponseEntity.ok().build();
+        } catch (RuntimeException e) {
+            // Return 404 if cleaner details not found
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/filter")

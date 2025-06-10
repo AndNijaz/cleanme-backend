@@ -112,6 +112,7 @@ public class ReviewService {
                     dto.setTime(reservation.getTime());
                     dto.setLocation(reservation.getLocation());
                     dto.setComment(reservation.getComment());
+                    dto.setStatus(reservation.getStatus()); // ✅ Include status
 
                     UsersEntity cleaner = reservation.getCleaner();
                     dto.setCleanerId(cleaner.getUid());

@@ -1,5 +1,6 @@
 package com.cleanme.dto;
 
+import com.cleanme.enums.ReservationStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,6 +18,7 @@ public class BookingWithReviewDto {
     private String comment;
     private String cleanerName;
     private UUID cleanerId;
+    private ReservationStatus status; // ✅ Added status field
 
     // Optional
     private ReviewDto review;
