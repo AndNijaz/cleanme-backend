@@ -29,6 +29,14 @@ public class ReservationService {
         String cleanerName = reservation.getCleaner() != null
                 ? reservation.getCleaner().getFirstName() + " " + reservation.getCleaner().getLastName()
                 : null;
+        
+        String clientName = reservation.getUser() != null
+                ? reservation.getUser().getFirstName() + " " + reservation.getUser().getLastName()
+                : null;
+        
+        String clientPhone = reservation.getUser() != null
+                ? reservation.getUser().getPhone()
+                : null;
 
         return new ReservationDto(
                 reservation.getRid(),
@@ -37,7 +45,9 @@ public class ReservationService {
                 reservation.getLocation(),
                 reservation.getStatus(), // ako koristiš enum
                 reservation.getComment(),
-                cleanerName
+                cleanerName,
+                clientName,
+                clientPhone
         );
     }
 
@@ -57,6 +67,14 @@ public class ReservationService {
         String cleanerName = reservation.getCleaner() != null
                 ? reservation.getCleaner().getFirstName() + " " + reservation.getCleaner().getLastName()
                 : null;
+        
+        String clientName = reservation.getUser() != null
+                ? reservation.getUser().getFirstName() + " " + reservation.getUser().getLastName()
+                : null;
+        
+        String clientPhone = reservation.getUser() != null
+                ? reservation.getUser().getPhone()
+                : null;
 
         return new ReservationDto(
                 reservation.getRid(),
@@ -65,7 +83,9 @@ public class ReservationService {
                 reservation.getLocation(),
                 reservation.getStatus(),
                 reservation.getComment(),
-                cleanerName
+                cleanerName,
+                clientName,
+                clientPhone
         );
     }
 
@@ -108,6 +128,8 @@ public class ReservationService {
         ReservationEntity saved = reservationRepository.save(reservation);
 
         String cleanerName = cleaner.getFirstName() + " " + cleaner.getLastName();
+        String clientName = user.getFirstName() + " " + user.getLastName();
+        String clientPhone = user.getPhone();
 
         return new ReservationDto(
                 saved.getRid(),
@@ -116,7 +138,9 @@ public class ReservationService {
                 saved.getLocation(),
                 saved.getStatus(),
                 saved.getComment(),
-                cleanerName
+                cleanerName,
+                clientName,
+                clientPhone
         );
     }
 
@@ -126,8 +150,12 @@ public class ReservationService {
                 .orElseThrow(() -> new RuntimeException("Reservation not found"));
         UsersEntity cleaner = usersRepository.findUsersEntityByUid(dto.getCleanerId()).orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (reservation == null || !reservation.getUser().getUid().equals(myID)) {
-            throw new RuntimeException("Reservation not found or not owned by user"); //
+        // Allow both clients and cleaners to update reservations
+        boolean isClient = reservation.getUser().getUid().equals(myID);
+        boolean isCleaner = reservation.getCleaner() != null && reservation.getCleaner().getUid().equals(myID);
+        
+        if (!isClient && !isCleaner) {
+            throw new RuntimeException("Not authorized to update this reservation"); 
         }
 
         reservation.setCleaner(cleaner);
@@ -140,6 +168,12 @@ public class ReservationService {
         ReservationEntity saved = reservationRepository.save(reservation);
 
         String cleanerName = cleaner != null ? cleaner.getFirstName() + " " + cleaner.getLastName() : null;
+        String clientName = reservation.getUser() != null 
+                ? reservation.getUser().getFirstName() + " " + reservation.getUser().getLastName() 
+                : null;
+        String clientPhone = reservation.getUser() != null 
+                ? reservation.getUser().getPhone() 
+                : null;
 
         return  new ReservationDto(
                 saved.getRid(),
@@ -148,7 +182,9 @@ public class ReservationService {
                 saved.getLocation(),
                 saved.getStatus(),
                 saved.getComment(),
-                cleanerName);
+                cleanerName,
+                clientName,
+                clientPhone);
     }
 
     @Transactional

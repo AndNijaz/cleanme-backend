@@ -30,8 +30,14 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/auth/register", "/auth/login").permitAll()
+                        .requestMatchers("/auth/cleaner-setup").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/cleaners/**").authenticated() // Require auth for cleaner updates
                         .requestMatchers(HttpMethod.PUT, "/reviews/update/**").permitAll()
+                        .requestMatchers("/cleaners/**").permitAll() // Allow reading cleaner endpoints
+                        .requestMatchers("/reservation/**").permitAll() // Temporarily allow reservation endpoints
+                        .requestMatchers("/user/**").permitAll() // Temporarily allow user endpoints
+                        .requestMatchers(HttpMethod.PUT, "/reservation/**").permitAll() // Explicit PUT access
                         .anyRequest().authenticated()
                 );
 

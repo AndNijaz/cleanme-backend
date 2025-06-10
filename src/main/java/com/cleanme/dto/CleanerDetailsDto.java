@@ -18,6 +18,7 @@ public class CleanerDetailsDto {
     private String firstName;
     private String lastName;
     private String email;
+    private String servicesOffered;
     private BigDecimal hourlyRate;
     private List<Map<String, CleanerSetupRequest.TimeRange>> availability;
     private List<String> bio;

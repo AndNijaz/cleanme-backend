@@ -18,6 +18,8 @@ public class ReservationDto {
     private ReservationStatus status;
     private String comment;
     private String cleanerName;
+    private String clientName;
+    private String clientPhone;
 
     public LocalDate getDate() {
         return date;
@@ -45,5 +47,13 @@ public class ReservationDto {
 
     public UUID getRid() {
         return rid;
+    }
+
+    public String getClientName() {
+        return clientName;
+    }
+
+    public String getClientPhone() {
+        return clientPhone;
     }
 }
