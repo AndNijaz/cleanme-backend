@@ -6,6 +6,8 @@ import com.cleanme.dto.UpdateReservationDto;
 import com.cleanme.entity.ReservationEntity;
 import com.cleanme.enums.ReservationStatus;
 import com.cleanme.entity.UsersEntity;
+import com.cleanme.exception.EntityNotFoundException;
+import com.cleanme.exception.UnauthorizedException;
 import com.cleanme.repository.ReservationRepository;
 import com.cleanme.repository.UsersRepository;
 import jakarta.transaction.Transactional;
@@ -62,7 +64,7 @@ public class ReservationService {
 
     public ReservationDto getReservation(UUID id){
         ReservationEntity reservation = reservationRepository.findReservationEntityByRid(id)
-                .orElseThrow(() -> new RuntimeException("Reservation not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Reservation", id));
 
         String cleanerName = reservation.getCleaner() != null
                 ? reservation.getCleaner().getFirstName() + " " + reservation.getCleaner().getLastName()
@@ -113,8 +115,8 @@ public class ReservationService {
         System.out.println("--------------------------------------------------------------------");
         System.out.println(dto);
         System.out.println("--------------------------------------------------------------------");
-        UsersEntity user = usersRepository.findUsersEntityByUid(myId).orElseThrow(() -> new RuntimeException("User not found"));
-        UsersEntity cleaner = usersRepository.findUsersEntityByUid(dto.getCleanerID()).orElseThrow(() -> new RuntimeException("Cleaner not found"));
+        UsersEntity user = usersRepository.findUsersEntityByUid(myId).orElseThrow(() -> new EntityNotFoundException("User", myId));
+        UsersEntity cleaner = usersRepository.findUsersEntityByUid(dto.getCleanerID()).orElseThrow(() -> new EntityNotFoundException("Cleaner", dto.getCleanerID()));
 
         ReservationEntity reservation = new ReservationEntity();
         reservation.setUser(user);
@@ -147,15 +149,15 @@ public class ReservationService {
     @Transactional
     public ReservationDto updateReservationDto(UUID id, UUID myID, UpdateReservationDto dto) {
         ReservationEntity reservation = reservationRepository.findReservationEntityByRid(id)
-                .orElseThrow(() -> new RuntimeException("Reservation not found"));
-        UsersEntity cleaner = usersRepository.findUsersEntityByUid(dto.getCleanerId()).orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Reservation", id));
+        UsersEntity cleaner = usersRepository.findUsersEntityByUid(dto.getCleanerId()).orElseThrow(() -> new EntityNotFoundException("Cleaner", dto.getCleanerId()));
 
         // Allow both clients and cleaners to update reservations
         boolean isClient = reservation.getUser().getUid().equals(myID);
         boolean isCleaner = reservation.getCleaner() != null && reservation.getCleaner().getUid().equals(myID);
         
         if (!isClient && !isCleaner) {
-            throw new RuntimeException("Not authorized to update this reservation"); 
+            throw new UnauthorizedException("Not authorized to update this reservation"); 
         }
 
         reservation.setCleaner(cleaner);
@@ -190,10 +192,10 @@ public class ReservationService {
     @Transactional
     public void deleteReservation(UUID id, UUID myID) {
         ReservationEntity reservation = reservationRepository.findReservationEntityByRid(id)
-                .orElseThrow(() -> new RuntimeException("Reservation not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Reservation", id));
 
-        if (reservation == null || !reservation.getUser().getUid().equals(myID)) {
-            throw new RuntimeException("Reservation not found or not owned by user.");
+        if (!reservation.getUser().getUid().equals(myID)) {
+            throw new UnauthorizedException("Not authorized to delete this reservation");
         }
 
         this.reservationRepository.deleteByRid(id);
