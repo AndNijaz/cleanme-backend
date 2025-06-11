@@ -1244,34 +1244,3 @@ public class CustomMetrics {
     }
 }
 ```
-
----
-
-## 📚 Best Practices Summary
-
-### ✅ **Do's**
-
-- Use constructor injection for dependencies
-- Implement proper validation with `@Valid`
-- Use transactions appropriately (`@Transactional`)
-- Follow RESTful API conventions
-- Implement comprehensive error handling
-- Write unit and integration tests
-- Use DTOs for API layer separation
-- Implement proper security measures
-
-### ❌ **Don'ts**
-
-- Don't expose entities directly in controllers
-- Don't ignore proper exception handling
-- Don't skip input validation
-- Don't store passwords in plain text
-- Don't use `@Autowired` on fields
-- Don't forget to handle edge cases
-- Don't skip database indexing for performance
-
----
-
-**Backend Development Guide Complete! 🎯**
-
-_This comprehensive guide covers all aspects of CleanMe backend development with Spring Boot, ensuring clean, maintainable, and scalable code._
