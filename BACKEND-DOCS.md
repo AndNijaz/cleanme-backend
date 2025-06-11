@@ -14,7 +14,6 @@ CleanMe Backend is a robust Spring Boot application that provides REST API servi
 - **Security**: Spring Security with JWT
 - **Build Tool**: Maven
 - **ORM**: Hibernate/JPA
-- **Validation**: Bean Validation (JSR-303)
 
 ### Project Structure
 
