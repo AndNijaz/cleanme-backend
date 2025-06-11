@@ -9,7 +9,7 @@ CleanMe Backend is a robust Spring Boot application that provides REST API servi
 ### Technology Stack
 
 - **Framework**: Spring Boot 3.x
-- **Language**: Java 17
+- **Language**: Java 21
 - **Database**: PostgreSQL
 - **Security**: Spring Security with JWT
 - **Build Tool**: Maven
